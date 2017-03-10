@@ -34,4 +34,15 @@ public class UserServiceImpl implements UserService{
     public User unbuyedProductList(int userId) {
         return userDao.unbuyedProducts(userId);
     }
+
+    /**
+     * 显示用户购物车中的商品
+     *
+     * @param keeperId
+     * @return
+     */
+    @Override
+    public User showCart(int keeperId) {
+        return userDao.showCart(keeperId);
+    }
 }

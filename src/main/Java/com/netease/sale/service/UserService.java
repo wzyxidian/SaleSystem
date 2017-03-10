@@ -31,4 +31,11 @@ public interface UserService {
      * @return
      */
     public User unbuyedProductList(int userId);
+
+    /**
+     *
+     * @param keeperId
+     * @return
+     */
+    public User showCart(int keeperId);
 }

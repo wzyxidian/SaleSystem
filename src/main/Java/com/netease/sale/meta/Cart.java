@@ -21,4 +21,8 @@ public class Cart {
      * 购物车中该商品数量
      */
     private int keepNumber;
+    /**
+     *
+     */
+    private Product product;
 }

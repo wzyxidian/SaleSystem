@@ -35,7 +35,6 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
                 <result property="pictureURL" column="pictureURL" />
                 <result property="detail" column="detail" />
                 <result property="price" column="price" />
-                <result property="count" column="count" />
                 <result property="owner" column="owner" />
                 <result property="saleout" column="saleout" />
             </association>
@@ -70,25 +69,39 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
                 <result property="pictureURL" column="pictureURL" />
                 <result property="detail" column="detail" />
                 <result property="price" column="price" />
-                <result property="count" column="count" />
+                <result property="saleout" column="saleout" />
                 <result property="owner" column="owner" />
             </association>
         </collection>
     </resultMap>
 
-    <select id="cartProducts" parameterType="int" resultMap="cart">
-        select *
+    <select id="showCart" parameterType="int" resultMap="cart">
+        select userId, userName, goodsId, keepNumber, productId, title, abstracts, pictureURL, detail, price, owner, saleout
         from user u
         left JOIN
-        cart c on u.userId = c.buyerId
-        where u.userId=#{userId}
+        cart c on u.userId = c.keeperId
+        left JOIN
+        product p on p.productId = c.goodsId
+        where u.userId=#{keeperId}
     </select>
     <resultMap id="cart" type="com.netease.sale.meta.User">
-        <collection property="cart"
+        <collection property="carts"
                     ofType="com.netease.sale.meta.Cart">
-            <id property="buyId" column="buyId" />
-            <result property="goodsId" column="goodsId" />
-            <result property="number" column="number" />
+        <id property="keeperId" column="keeperId" />
+        <result property="goodsId" column="goodsId" />
+        <result property="keepNumber" column="keepNumber" />
+
+        <association property="product"
+                     javaType="com.netease.sale.meta.Product" >
+            <id property="productId" column="productId" />
+            <result property="title" column="title" />
+            <result property="abstracts" column="abstracts" />
+            <result property="pictureURL" column="pictureURL" />
+            <result property="detail" column="detail" />
+            <result property="price" column="price" />
+            <result property="saleout" column="saleout" />
+            <result property="owner" column="owner" />
+        </association>
         </collection>
     </resultMap>
 </mapper>

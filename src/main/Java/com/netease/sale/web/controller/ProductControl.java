@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -191,30 +190,7 @@ public class ProductControl {
         return  modelAndView;
     }
 
-    /**
-     * 列举用户所有购买的商品
-     * @param request
-     * @return
-     */
-    @RequestMapping("account")
-    public ModelAndView buyProductList(HttpServletRequest request){
-        int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
 
-        User user = userService.buyedProductList(userId);
-        List<Buy> buyItems = user.getBuys();
-        DecimalFormat df = new DecimalFormat("######0.00");
-        double result = 0.00;
-        for(int i=0;i<buyItems.size();i++){
-            result += buyItems.get(i).getOldPrice() * buyItems.get(i).getNumber();
-            df.format(result);
-        }
-        ModelAndView modelAndView = new ModelAndView("productBuyed");
-        modelAndView.addObject("buyItems",buyItems);
-        modelAndView.addObject("total",result);
-
-//        modelAndView.setViewName("redirect:/");
-        return modelAndView;
-    }
     /**
      * 列举用户所有购买的商品
      * @param request

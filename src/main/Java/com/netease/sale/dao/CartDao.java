@@ -4,6 +4,8 @@ import com.netease.sale.meta.Cart;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/2/18.
  */
@@ -25,4 +27,5 @@ public interface CartDao {
      * @return
      */
     public void deleteCart(@Param("keeperId") int keeperId, @Param("goodsId") int goodsId);
+
 }

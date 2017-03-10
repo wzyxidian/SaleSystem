@@ -81,7 +81,7 @@
                 <c:if test="${type eq 1}">
                     <div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">0</span><span id="addNum" class="moreNum"><a>+</a></span></div>
                     <div class="oprt f-cb">
-                        <button class="u-btn u-btn-primary" id="add" data-id="65" data-title="标题" data-price="1">
+                        <button class="u-btn u-btn-primary" id="add" data-id="65" data-title="标题" data-price="1" href="">
                             加入购物车
                         </button>
                     </div>

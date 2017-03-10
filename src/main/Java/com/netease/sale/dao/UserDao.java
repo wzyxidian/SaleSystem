@@ -36,8 +36,8 @@ public interface UserDao {
 
     /**
      * 显示用户购物车中的商品
-     * @param userId
+     * @param keeperId
      * @return
      */
-    public User cartProducts(int userId);
+    public User showCart(int keeperId);
 }
