@@ -8,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -31,14 +32,24 @@ public class CartControl {
      * @param request
      * @return
      */
-    @RequestMapping("/cart/add")
+    @RequestMapping("/addCart")
+    @ResponseBody
     public String addCart(@RequestParam("goodsId") int goodsId, @RequestParam("keepNumber") int keepNumber, HttpServletRequest request){
-       //int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
-        int keeperId = 3;
-        cartService.addCart(keeperId, goodsId, keepNumber);
-        return "productDetail";
+        int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
+        try{
+            cartService.addCart(keeperId, goodsId, keepNumber);
+        }catch (Exception e){
+            e.getMessage();
+            return "fail";
+        }
+        return "success";
     }
 
+    /**
+     * 列举购物车中的信息
+     * @param request
+     * @return
+     */
     @RequestMapping("/settleAccount")
     public ModelAndView showCart( HttpServletRequest request){
         int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());

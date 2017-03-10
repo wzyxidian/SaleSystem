@@ -24,7 +24,7 @@
             买家你好，<span class="name">${userName}</span>！<a href="/logout">[退出]</a>
         </div>
         <ul class="nav">
-            <li><a href=/"">首页</a></li>
+            <li><a href="/">首页</a></li>
             <li><a href="/account">账务</a></li>
             <li><a href="/settleAccount">购物车</a></li>
         </ul>

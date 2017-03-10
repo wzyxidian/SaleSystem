@@ -33,7 +33,7 @@ $('add').onclick = function(e){
     var title = ele && ele.dataset.title;
     var price = ele && ele.dataset.price;
     var num = $('allNum').innerHTML;
-    var productDetail = {'id':id,'price':price,'title':title,'num':num};
+   /* var productDetail = {'productId':id,'price':price,'title':title,'keepNumber':num};
     var name = 'products';
     var productList1 = new Array;
     var productList = util.getCookie(name);
@@ -47,7 +47,7 @@ $('add').onclick = function(e){
         productList.push(productDetail);
         util.setCookie(name,productList);
     }
-    console.log(document.cookie);
+    console.log(document.cookie);*/
 //		util.deleteCookie(name);
     e == window.event || e;
     layer.reset({
@@ -55,12 +55,21 @@ $('add').onclick = function(e){
         onconfirm:function(){
             layer.hide();
             loading.show();
-            loading.result('添加购物车成功');
+            ajax({
+                url:'/addCart',
+                data:{goodsId:id, keepNumber:num},
+                success:function(result){
+                    if(result == "success"){
+                        loading.result('添加购物车成功');
+                    }else{
+                        loading.result('添加购物车失败');
+                    }
+                    location.href="/productDetail?productId=id&type=1";
+                }
+            });
         }.bind(this)
     }).show();
-    return;
 };
-
 
 
 
