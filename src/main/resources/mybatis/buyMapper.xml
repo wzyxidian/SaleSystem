@@ -6,12 +6,14 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
 
     <insert id="addBuy" parameterType="com.netease.sale.meta.Buy"
             useGeneratedKeys="true" >
-        insert into buy(buyerId,goodsId,number,buyTime)
-        values(#{buyerId},#{goodsId},#{number},#{buyTime})
+        insert into buy(buyerId,goodsId,number,buyTime,oldPrice)
+        values(#{buyerId},#{goodsId},#{number},#{buyTime},#{oldPrice})
         <selectKey keyProperty="buyId" resultType="int" order="AFTER">
             select last_insert_id() as buyId
         </selectKey>
     </insert>
 
-
+    <select id="getBuys" parameterType="com.netease.sale.meta.Buy">
+        select * from buy where buyerId=#{buyerId} and goodsId=#{goodsId}
+    </select>
 </mapper>

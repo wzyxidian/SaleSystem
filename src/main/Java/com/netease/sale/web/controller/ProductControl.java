@@ -3,6 +3,7 @@ package com.netease.sale.web.controller;
 import com.netease.sale.meta.Buy;
 import com.netease.sale.meta.Product;
 import com.netease.sale.meta.User;
+import com.netease.sale.service.serviceImpl.BuyServiceImpl;
 import com.netease.sale.service.serviceImpl.ProductServiceImpl;
 import com.netease.sale.service.serviceImpl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class ProductControl {
     private ProductServiceImpl productService;
     @Resource
     private UserServiceImpl userService;
+    @Resource
+    private BuyServiceImpl buyService;
     /**
      * 发布商品
      * @param title
@@ -156,11 +159,17 @@ public class ProductControl {
      * @return
      */
     @RequestMapping("/productDetail")
-    public ModelAndView showProductDetail(@RequestParam("productId") int productId){
+    public ModelAndView showProductDetail(@RequestParam("productId") int productId, HttpServletRequest request){
         Product product = productService.getProduct(productId);
         System.out.println("产品名称:" + product.getTitle());
         ModelAndView modelAndView = new ModelAndView("productDetail");
         modelAndView.addObject("productDetail", product);
+        if(request.getSession().getAttribute("userId") != null
+                && (Integer)(request.getSession().getAttribute("flag")) == 0){
+            int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
+            List<Buy> buys = buyService.getBuys(userId, productId);
+            modelAndView.addObject("buys",buys);
+        }
         return  modelAndView;
     }
 

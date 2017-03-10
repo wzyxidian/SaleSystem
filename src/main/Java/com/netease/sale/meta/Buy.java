@@ -2,6 +2,8 @@ package com.netease.sale.meta;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Administrator on 2017/2/15.
  */
@@ -33,4 +35,8 @@ public class Buy {
      * 一条购买记录对应一件商品
      */
     private Product product;
+    /**
+     * 购买商品时的价格
+     */
+    private BigDecimal oldPrice;
 }

@@ -9,7 +9,7 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     </select>
 
     <select id="buyedProducts" parameterType="int" resultMap="products">
-        select buyId, buyerId, goodsId, userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner, number, buyTime, saleout
+        select buyId, buyerId, goodsId, userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner, number, buyTime, oldPrice saleout
         from user u
         left JOIN
         buy b on u.userId = b.buyerId
@@ -25,6 +25,7 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
             <result property="goodsId" column="goodsId" />
             <result property="number" column="number" />
             <result property="buyTime" column="buyTime" />
+            <result property="oldPrice" column="oldPrice" />
 
             <association property="product"
                          javaType="com.netease.sale.meta.Product" >

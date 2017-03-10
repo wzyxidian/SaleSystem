@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,14 +31,16 @@ public class BuyControl {
      * @return
      */
      @RequestMapping("/buy/add")
-     public String addBuy(@RequestParam("goodsId") int goodsId, @RequestParam("number") int number, HttpServletRequest request){
+     public String addBuy(@RequestParam("goodsId") int goodsId, @RequestParam("number") int number, @RequestParam("oldPrice") BigDecimal oldPrice, HttpServletRequest request){
 //         int buyerId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
          int buyerId = 3;
          cartService.deleteCart(buyerId,goodsId);
          Date date = new Date();
          SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
          String buyTime = simpleDateFormat.format(date);
-         buyService.addBuy(buyerId,goodsId,number,buyTime);
+         buyService.addBuy(buyerId,goodsId,number,buyTime,oldPrice);
          return "index";
      }
+
+
 }
