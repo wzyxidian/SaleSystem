@@ -34,10 +34,10 @@
 		</div>
 	</div>
 	<div class="n-plist">
-        <ul class="f-cb" id="plist">
+        <ul class="f-cb">
             <c:forEach items="${productList}" var="product">
                 <li>
-					<a href="/productDetail?productId=${product.productId}" class="link">
+					<a href="/productDetail?productId=${product.productId}&type=0" class="link">
                         <div class="img">
                             <img src="${product.pictureURL}" alt="${product.title}">
                         </div>
@@ -79,7 +79,7 @@
 		<ul class="f-cb">
 			<c:forEach items="${buyProducts}" var="buyProduct">
 					<li class="buy">
-						<a href="/productDetail?productId=${buyProduct.productId}" class="link">
+						<a href="/productDetail?productId=${buyProduct.productId}&type=0" class="link">
 							<div class="img">
 								<img src="${buyProduct.pictureURL}" alt="${buyProduct.title}">
 							</div>
@@ -92,7 +92,7 @@
 			</c:forEach>
 			<c:forEach items="${unbuyProducts}" var="unbuyProduct">
 				<li>
-					<a href="/productDetail?productId=${unbuyProduct.productId}" class="link">
+					<a href="/productDetail?productId=${unbuyProduct.productId}&type=1" class="link">
 						<div class="img">
 							<img src="${unbuyProduct.pictureURL}" alt="${unbuyProduct.title}">
 						</div>
@@ -127,11 +127,14 @@
 			</ul>
 		</div>
 	</div>
-	<div class="n-plist">
-		<ul class="f-cb">
+	<div class="n-plist" >
+		<ul class="f-cb" id = "plist">
 			<c:forEach items="${sellerProductList}" var="sellerProduct">
-				<li>
-					<a href="/productDetail?productId=${sellerProduct.productId}" class="link">
+				<li id="${sellerProduct.productId}">
+					<c:if test="${!saleProducts.contains(sellerProduct)}">
+						<div class="u-btn u-btn-normal u-btn-xs del " data-del="20" onclick="disp_confirm(${sellerProduct.productId})">删除</div>
+					</c:if>
+					<a href="/productDetail?productId=${sellerProduct.productId}&type=0" class="link">
 						<div class="img">
 							<img src="${sellerProduct.pictureURL}" alt="${sellerProduct.title}">
 						</div>
@@ -141,9 +144,6 @@
 						<h4>已售出${sellerProduct.saleout}件</h4>
 						<c:if test="${saleProducts.contains(sellerProduct)}">
 							<span class="had"><b>已售出</b></span>
-						</c:if>
-						<c:if test="${!saleProducts.contains(sellerProduct)}">
-							<div class="u-btn u-btn-normal u-btn-xs del" data-del="20"><a href="/delete?productId=${sellerProduct.productId}" style="display:inline">删除</a></div>
 						</c:if>
 					</a>
 				</li>

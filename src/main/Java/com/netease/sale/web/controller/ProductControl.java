@@ -9,12 +9,16 @@ import com.netease.sale.service.serviceImpl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -78,15 +82,20 @@ public class ProductControl {
     }
 
     /**
-     * 删除商品
+     * 卖家删除商品
      * @param productId
      * @return
      */
     @RequestMapping("/delete")
+    @ResponseBody
     public String deleteProduct(@RequestParam("productId") int productId){
-        System.out.println("删除没有买的消息");
-        productService.deleteProduct(productId);
-        return "redirect:/index";
+        try{
+            productService.deleteProduct(productId);
+        }catch(Exception e){
+            e.getMessage();
+            return "fail";
+        }
+        return "success";
     }
 
     /**
@@ -156,19 +165,31 @@ public class ProductControl {
     /**
      * 得到产品详情
      * @param productId
+     * @param type  0表示不能添加购物车，1表示可以添加购物车
      * @return
      */
     @RequestMapping("/productDetail")
-    public ModelAndView showProductDetail(@RequestParam("productId") int productId, HttpServletRequest request){
+    public ModelAndView showProductDetail(@RequestParam("productId") int productId, @RequestParam("type") int type, HttpServletRequest request){
         Product product = productService.getProduct(productId);
         System.out.println("产品名称:" + product.getTitle());
         ModelAndView modelAndView = new ModelAndView("productDetail");
         modelAndView.addObject("productDetail", product);
+        modelAndView.addObject("type",type);
         if(request.getSession().getAttribute("userId") != null
                 && (Integer)(request.getSession().getAttribute("flag")) == 0){
             int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
             List<Buy> buys = buyService.getBuys(userId, productId);
-            modelAndView.addObject("buys",buys);
+            int count = 0;
+            Set<BigDecimal> oldPrice = new HashSet<BigDecimal>();
+            StringBuffer sb = new StringBuffer();
+            for(int i=0;i<buys.size();i++){
+                count += buys.get(i).getNumber();
+                if(oldPrice.add(buys.get(i).getOldPrice())){
+                    sb.append("¥" + buys.get(i).getOldPrice() + " ");
+                }
+            }
+            modelAndView.addObject("count",count);
+            modelAndView.addObject("oldPrice", sb);
         }
         return  modelAndView;
     }

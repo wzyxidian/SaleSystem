@@ -13,7 +13,7 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
         </selectKey>
     </insert>
 
-    <select id="getBuys" parameterType="com.netease.sale.meta.Buy">
+    <select id="getBuys" resultType="com.netease.sale.meta.Buy">
         select * from buy where buyerId=#{buyerId} and goodsId=#{goodsId}
     </select>
 </mapper>
