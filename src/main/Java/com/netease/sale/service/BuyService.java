@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface BuyService {
 
-    public void addBuy(int buyerId, int goodsId, int number, String buyTime, BigDecimal oldPrice);
+    public void addBuy(int buyerId, int goodsId, int number, String buyTime, double oldPrice);
 
     public List<Buy> getBuys(int buyerId, int goodsId);
 }

@@ -18,7 +18,7 @@ public class BuyServiceImpl implements BuyService {
     @Resource
     private BuyDao buyDao;
     @Override
-    public void addBuy(int buyerId, int goodsId, int number, String buyTime, BigDecimal oldPrice) {
+    public void addBuy(int buyerId, int goodsId, int number, String buyTime, double oldPrice) {
             buyDao.addBuy(buyerId,goodsId,number,buyTime,oldPrice);
     }
 

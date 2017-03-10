@@ -21,7 +21,7 @@ public interface BuyDao {
      * @param buyTime
      * @return
      */
-    public void addBuy(@Param("buyerId") int buyerId, @Param("goodsId") int goodsId, @Param("number") int number, @Param("buyTime") String buyTime, @Param("oldPrice")BigDecimal oldPrice);
+    public void addBuy(@Param("buyerId") int buyerId, @Param("goodsId") int goodsId, @Param("number") int number, @Param("buyTime") String buyTime, @Param("oldPrice") Double oldPrice);
 
     /**
      * 查询用户购买记录简要信息

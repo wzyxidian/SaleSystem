@@ -31,7 +31,7 @@ public class BuyControl {
      * @return
      */
      @RequestMapping("/buy/add")
-     public String addBuy(@RequestParam("goodsId") int goodsId, @RequestParam("number") int number, @RequestParam("oldPrice") BigDecimal oldPrice, HttpServletRequest request){
+     public String addBuy(@RequestParam("goodsId") int goodsId, @RequestParam("number") int number, @RequestParam("oldPrice") double oldPrice, HttpServletRequest request){
 //         int buyerId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
          int buyerId = 3;
          cartService.deleteCart(buyerId,goodsId);

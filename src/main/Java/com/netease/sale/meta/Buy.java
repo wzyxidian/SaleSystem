@@ -38,5 +38,5 @@ public class Buy {
     /**
      * 购买商品时的价格
      */
-    private BigDecimal oldPrice;
+    private Double oldPrice;
 }

@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -180,7 +177,7 @@ public class ProductControl {
             int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
             List<Buy> buys = buyService.getBuys(userId, productId);
             int count = 0;
-            Set<BigDecimal> oldPrice = new HashSet<BigDecimal>();
+            Set<Double> oldPrice = new HashSet<Double>();
             StringBuffer sb = new StringBuffer();
             for(int i=0;i<buys.size();i++){
                 count += buys.get(i).getNumber();
@@ -199,22 +196,21 @@ public class ProductControl {
      * @param request
      * @return
      */
-    @RequestMapping("showBuy")
+    @RequestMapping("account")
     public ModelAndView buyProductList(HttpServletRequest request){
         int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
 
         User user = userService.buyedProductList(userId);
         List<Buy> buyItems = user.getBuys();
-        System.out.println("购买记录条数：" + buyItems.size());
-        Set<Integer> buyProducts = new HashSet<Integer>();
-        for (int i=0;i<buyItems.size();i++) {
-            buyProducts.add(buyItems.get(i).getProduct().getProductId());
+        DecimalFormat df = new DecimalFormat("######0.00");
+        double result = 0.00;
+        for(int i=0;i<buyItems.size();i++){
+            result += buyItems.get(i).getOldPrice() * buyItems.get(i).getNumber();
+            df.format(result);
         }
-        System.out.println("购买商品种类数：" + buyProducts.size());
-
-        ModelAndView modelAndView;
-        modelAndView = new ModelAndView("redirect:/");//两种重定向的方法都可以
-        modelAndView.addObject("buyProducts",buyProducts);
+        ModelAndView modelAndView = new ModelAndView("productBuyed");
+        modelAndView.addObject("buyItems",buyItems);
+        modelAndView.addObject("total",result);
 
 //        modelAndView.setViewName("redirect:/");
         return modelAndView;
@@ -243,4 +239,6 @@ public class ProductControl {
 //        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
+
 }

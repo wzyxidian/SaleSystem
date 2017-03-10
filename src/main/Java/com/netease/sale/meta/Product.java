@@ -33,7 +33,7 @@ public class Product {
     /**
      * 商品的价格
      */
-    private BigDecimal price;
+    private Double price;
     /**
      * 商品所属的卖家ID
      */
