@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://
+mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.sale.dao.CartDao">
+
+    <insert id="addCart" parameterType="com.netease.sale.meta.Cart">
+        insert into cart(keeperId,goodsId,keepNumber)
+        values(#{keeperId},#{goodsId},#{keepNumber})
+    </insert>
+
+    <delete id="deleteCart" parameterType="int">
+        delete from cart where keeperId=#{keeperId} and goodsId=#{goodsId}
+    </delete>
+</mapper>

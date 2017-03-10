@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://
+mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.sale.dao.ProductDao">
+    <select id="getProduct" parameterType="int" resultType="com.netease.sale.meta.Product">
+        select *  from product where productId = #{productId}
+    </select>
+
+    <select id="getProductList"  resultType="com.netease.sale.meta.Product">
+        select *  from product
+    </select>
+    <select id="sellerProductList"  resultType="com.netease.sale.meta.Product">
+        select *  from product where owner=#{owner}
+    </select>
+
+    <insert id="addProduct" parameterType="com.netease.sale.meta.Product"
+            useGeneratedKeys="true">
+        insert into product(title, abstracts, pictureURL, detail, price, owner)
+        values(#{title},#{abstracts},#{pictureURL},#{detail},#{price},#{owner})
+
+        <selectKey keyProperty="productId" resultType="int" order="AFTER">
+            select last_insert_id() as productId
+        </selectKey>
+    </insert>
+
+    <update id="updateProduct" parameterType="com.netease.sale.meta.Product">
+        update product set title=#{title},abstracts=#{abstracts},pictureURL=#{pictureURL},detail=#{detail},price=#{price}
+        where productId=#{productId}
+    </update>
+
+    <delete id="deleteProduct" parameterType="int">
+        delete from product where productId=#{productId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://
+mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.sale.dao.UserDao">
+
+    <select id="checkUser"  resultType="com.netease.sale.meta.User">
+        select * from user where userName=#{userName} and userPassword=#{userPassword}
+    </select>
+
+    <select id="buyedProducts" parameterType="int" resultMap="products">
+        select buyId, buyerId, goodsId, userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner, number, buyTime, saleout
+        from user u
+        left JOIN
+        buy b on u.userId = b.buyerId
+        left JOIN
+        product p on p.productId = b.goodsId
+        where u.userId=#{userId}
+    </select>
+    <resultMap id="products" type="com.netease.sale.meta.User">
+        <collection property="buys"
+                    ofType="com.netease.sale.meta.Buy">
+            <id property="buyId" column="buyId" />
+            <result property="buyerId" column="buyerId" />
+            <result property="goodsId" column="goodsId" />
+            <result property="number" column="number" />
+            <result property="buyTime" column="buyTime" />
+
+            <association property="product"
+                         javaType="com.netease.sale.meta.Product" >
+                <id property="productId" column="productId" />
+                <result property="title" column="title" />
+                <result property="abstracts" column="abstracts" />
+                <result property="pictureURL" column="pictureURL" />
+                <result property="detail" column="detail" />
+                <result property="price" column="price" />
+                <result property="count" column="count" />
+                <result property="owner" column="owner" />
+                <result property="saleout" column="saleout" />
+            </association>
+        </collection>
+     </resultMap>
+
+    <select id="unbuyedProducts" parameterType="int" resultMap="unProducts">
+        select userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner
+        from product p
+        left JOIN (
+        select * from
+        buy b
+        left JOIN
+        user u on u.userId = b.buyerId
+        where u.userId=#{userId}) as c on p.productId = c.goodsId where
+        c.goodsId is null;
+    </select>
+    <resultMap id="unProducts" type="com.netease.sale.meta.User">
+        <collection property="buys"
+                    ofType="com.netease.sale.meta.Buy">
+            <id property="buyId" column="buyId" />
+            <result property="buyerId" column="buyerId" />
+            <result property="goodsId" column="goodsId" />
+            <result property="number" column="number" />
+            <result property="buyTime" column="buyTime" />
+
+            <association property="product"
+                         javaType="com.netease.sale.meta.Product" >
+                <id property="productId" column="productId" />
+                <result property="title" column="title" />
+                <result property="abstracts" column="abstracts" />
+                <result property="pictureURL" column="pictureURL" />
+                <result property="detail" column="detail" />
+                <result property="price" column="price" />
+                <result property="count" column="count" />
+                <result property="owner" column="owner" />
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="cartProducts" parameterType="int" resultMap="cart">
+        select *
+        from user u
+        left JOIN
+        cart c on u.userId = c.buyerId
+        where u.userId=#{userId}
+    </select>
+    <resultMap id="cart" type="com.netease.sale.meta.User">
+        <collection property="cart"
+                    ofType="com.netease.sale.meta.Cart">
+            <id property="buyId" column="buyId" />
+            <result property="goodsId" column="goodsId" />
+            <result property="number" column="number" />
+        </collection>
+    </resultMap>
+</mapper>
