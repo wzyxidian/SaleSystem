@@ -22,10 +22,26 @@ public interface CartDao {
     public void addCart(@Param("keeperId") int keeperId, @Param("goodsId") int goodsId, @Param("keepNumber") int keepNumber);
 
     /**
+     * 更新购物车中的同一件商品的件数
+     * @param keepNumber
+     * @param cartId
+     */
+    public void updateCart(@Param("keepNumber") int keepNumber, @Param("cartId") int cartId);
+
+    /**
      * 删除购物车信息
      * @param keeperId
      * @return
      */
-    public void deleteCart(@Param("keeperId") int keeperId, @Param("goodsId") int goodsId);
+    public int deleteCart(@Param("keeperId") int keeperId);
+
+    /**
+     * 查看一条购物车记录
+     * @param keeperId
+     * @param goodsId
+     * @return
+     */
+    public Cart selectCart(@Param("keeperId") int keeperId, @Param("goodsId") int goodsId);
+
 
 }

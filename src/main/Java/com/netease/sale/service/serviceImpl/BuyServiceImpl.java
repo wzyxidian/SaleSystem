@@ -27,5 +27,16 @@ public class BuyServiceImpl implements BuyService {
         return buyDao.getBuys(buyerId, goodsId);
     }
 
+    /**
+     * 将购物车中的记录批量添加到购买记录表中
+     *
+     * @param buyList
+     * @return
+     */
+    @Override
+    public int addBuyList(List<Buy> buyList) {
+        return buyDao.addBuyList(buyList);
+    }
+
 
 }

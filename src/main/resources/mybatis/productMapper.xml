@@ -33,4 +33,14 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
         delete from product where productId=#{productId}
     </delete>
 
+    <update id="batchUpdateProducts" parameterType="java.util.List">
+
+        <foreach collection="productList" index="index" item="productItem" open="" separator=";" close="">
+            update product
+            <set>
+                saleout=#{productItem.saleout}
+            </set>
+              where productId = #{productItem.productId}
+        </foreach>
+    </update>
 </mapper>

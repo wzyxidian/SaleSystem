@@ -41,7 +41,7 @@ public class ProductControl {
      * @param request
      * @return
      */
-    @RequestMapping("product/add")
+    @RequestMapping("public")
     public String  addProduct(@RequestParam("title") String title,
                            @RequestParam("abstracts") String abstracts,
                            @RequestParam("pictureURL") String pictureURL,

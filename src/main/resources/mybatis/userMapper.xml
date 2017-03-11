@@ -76,7 +76,7 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     </resultMap>
 
     <select id="showCart" parameterType="int" resultMap="cart">
-        select userId, userName, goodsId, keepNumber, productId, title, abstracts, pictureURL, detail, price, owner, saleout
+        select cartId, userId, userName, goodsId, keepNumber, productId, title, abstracts, pictureURL, detail, price, owner, saleout
         from user u
         left JOIN
         cart c on u.userId = c.keeperId
@@ -87,7 +87,8 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     <resultMap id="cart" type="com.netease.sale.meta.User">
         <collection property="carts"
                     ofType="com.netease.sale.meta.Cart">
-        <id property="keeperId" column="keeperId" />
+        <id property="cartId" column="cartId" />
+        <result property="keeperId" column="keeperId" />
         <result property="goodsId" column="goodsId" />
         <result property="keepNumber" column="keepNumber" />
 

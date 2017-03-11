@@ -1,11 +1,7 @@
 package com.netease.sale.service;
 
-import com.netease.sale.dao.ProductDao;
-import com.netease.sale.dao.UserDao;
 import com.netease.sale.meta.Product;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -59,4 +55,11 @@ public interface ProductService {
      * @param owner
      */
     public List<Product> sellerProductList(int owner);
+
+    /**
+     * 批量更新每件商品已经卖出的件数
+     * @param productList
+     * @return
+     */
+    public int batchUpdateProducts(List productList);
 }

@@ -10,6 +10,10 @@ import lombok.Data;
 public class Cart {
 
     /**
+     * 购物记录ID
+     */
+    private int cartId;
+    /**
      * 买家Id
      */
     private int keeperId;

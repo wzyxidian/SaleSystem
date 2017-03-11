@@ -36,8 +36,13 @@ public class CartControl {
     @ResponseBody
     public String addCart(@RequestParam("goodsId") int goodsId, @RequestParam("keepNumber") int keepNumber, HttpServletRequest request){
         int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
+        Cart cart = cartService.selectCart(keeperId,goodsId);
         try{
-            cartService.addCart(keeperId, goodsId, keepNumber);
+            if(cart != null){
+                cartService.updateCart(keepNumber+cart.getKeepNumber(),cart.getCartId());
+            }else {
+                cartService.addCart(keeperId, goodsId, keepNumber);
+            }
         }catch (Exception e){
             e.getMessage();
             return "fail";
@@ -54,8 +59,11 @@ public class CartControl {
     public ModelAndView showCart( HttpServletRequest request){
         int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
         User user = userService.showCart(keeperId);
-        List<Cart> cartItems = user.getCarts();
+        List<Cart> cartItems = null;
         ModelAndView modelAndView = new ModelAndView("settleAccount");
+        if(user != null){
+            cartItems  = user.getCarts();
+        }
         modelAndView.addObject("cartItems", cartItems);
         return  modelAndView;
     }

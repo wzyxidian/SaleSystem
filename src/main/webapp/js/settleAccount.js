@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/2/20.
- */
 (function(w,d,u){
 	var settleAccount = util.get('settleAccount');
 	if(!settleAccount){

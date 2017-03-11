@@ -35,3 +35,5 @@ function disp_confirm(id)
         }.bind(this)
     }).show();
 }
+
+

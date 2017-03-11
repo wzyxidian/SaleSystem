@@ -65,5 +65,16 @@ public class ProductServiceImpl implements ProductService {
         return productDao.sellerProductList(owner);
     }
 
+    /**
+     * 批量更新每件商品已经卖出的件数
+     *
+     * @param productList
+     * @return
+     */
+    @Override
+    public int batchUpdateProducts(List productList) {
+        return productDao.batchUpdateProducts(productList);
+    }
+
 
 }

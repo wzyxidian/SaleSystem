@@ -45,11 +45,12 @@
         </tbody>
 
     </table>
-    <div id="act-btn"><button class="u-btn u-btn-primary" id="back" ><a href="/" style="color: white">退出</a> </button>
-        <button class="u-btn u-btn-primary" id="Account">购买</button></div>
+    <div id="act-btn"><button class="u-btn u-btn-primary" id="back" >退出</button>
+        <button class="u-btn u-btn-primary" id="Account" onclick="cart_buy()">购买</button></div>
 </div>
 
-
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
+<script type="text/javascript" src="js/pageAccount.js"></script>
 </body>
 </html>

@@ -22,9 +22,21 @@ public interface CartService {
     /**
      * 将商品从购物车中删除
      * @param keeperId
-     * @param goodsId
      */
-    public void deleteCart(int keeperId, int goodsId);
+    public int deleteCart(int keeperId);
 
+    /**
+     * 更新购物车中同一件商品的件数
+     * @param keepNumber
+     * @param cartId
+     */
+    public void updateCart(int keepNumber, int cartId);
 
+    /**
+     * 查看一条购物车记录
+     * @param keeperId
+     * @param goodsId
+     * @return
+     */
+    public Cart selectCart(int keeperId, int goodsId);
 }

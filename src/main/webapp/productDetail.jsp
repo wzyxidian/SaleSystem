@@ -72,16 +72,21 @@
                     <span class="v-unit">¥</span><span class="v-value">${productDetail.price}</span>
                 </div>
                 <c:if test="${type eq 0}">
-                    <div class="num">购买数量：<span class="lessNum"><a>-</a></span><span class="totalNum" >${count}</span><span class="moreNum"><a>+</a></span></div>
+                    <div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum" >${count}</span><span id="addNum" class="moreNum"><a>+</a></span></div>
                     <div class="oprt f-cb">
                         <span class="u-btn u-btn-primary z-dis">已购买</span>
                         <span class="buyprice">当时购买价格：${oldPrice}</span>
+                    </div>
+                    <div class="oprt f-cb">
+                        <button class="u-btn u-btn-primary" id="add" data-id="${productDetail.productId}" onclick="jion_cart(${productDetail.productId},0)" data-title="${productDetail.title}" data-price="${productDetail.price}" >
+                            加入购物车
+                        </button>
                     </div>
                 </c:if>
                 <c:if test="${type eq 1}">
                     <div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">0</span><span id="addNum" class="moreNum"><a>+</a></span></div>
                     <div class="oprt f-cb">
-                        <button class="u-btn u-btn-primary" id="add" data-id="${productDetail.productId}" data-title="${productDetail.title}" data-price="${productDetail.price}" >
+                        <button class="u-btn u-btn-primary" id="add" data-id="${productDetail.productId}" onclick="jion_cart(${productDetail.productId},1)" data-title="${productDetail.title}" data-price="${productDetail.price}" >
                             加入购物车
                         </button>
                     </div>
@@ -133,8 +138,8 @@
     </div>
 </c:if>
 
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 <script type="text/javascript" src="/js/pageShow.js"></script>
-<script type="text/javascript" src="/js/pageIndex.js"></script>
 </body>
 </html>

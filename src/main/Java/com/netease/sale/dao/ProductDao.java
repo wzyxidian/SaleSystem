@@ -2,8 +2,6 @@ package com.netease.sale.dao;
 
 import com.netease.sale.meta.Product;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -60,4 +58,11 @@ public interface ProductDao {
      * @return
      */
     public List<Product> sellerProductList(int owner);
+
+    /**
+     * 批量更新每件商品已经卖出的件数
+     * @param productList
+     * @return
+     */
+    public int batchUpdateProducts(@Param("productList") List productList);
 }

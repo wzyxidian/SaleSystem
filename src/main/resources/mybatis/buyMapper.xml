@@ -16,4 +16,24 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     <select id="getBuys" resultType="com.netease.sale.meta.Buy">
         select * from buy where buyerId=#{buyerId} and goodsId=#{goodsId}
     </select>
+
+    <insert id="addBuyList" parameterType="java.util.List"
+            useGeneratedKeys="true" >
+
+        <selectKey keyProperty="buyId" resultType="int" order="AFTER">
+            select last_insert_id() as buyId
+        </selectKey>
+        insert into buy(buyerId,goodsId,number,buyTime,oldPrice)
+        values
+        <foreach collection="buyList" item="buyItem" index="index" separator=",">
+            (
+                #{buyItem.buyerId},
+                #{buyItem.goodsId},
+                #{buyItem.number},
+                #{buyItem.buyTime},
+                #{buyItem.oldPrice}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

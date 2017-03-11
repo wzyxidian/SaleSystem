@@ -30,4 +30,11 @@ public interface BuyDao {
      * @return
      */
     public List<Buy> getBuys(@Param("buyerId") int buyerId, @Param("goodsId") int goodsId);
+
+    /**
+     * 批量将购物车中的信息添加到购买记录表中
+     * @param buyList
+     * @return
+     */
+    public int addBuyList(@Param("buyList") List<Buy> buyList);
 }
