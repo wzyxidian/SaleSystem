@@ -31,6 +31,15 @@ public class ProductControl {
     private UserServiceImpl userService;
     @Resource
     private BuyServiceImpl buyService;
+
+    @RequestMapping("public")
+    public String publicPage(HttpServletRequest request){
+        Object userId = request.getSession().getAttribute("userId");
+        if(userId != null){
+            return "/public";
+        }else
+            return "/index";
+    }
     /**
      * 发布商品
      * @param title
@@ -41,19 +50,32 @@ public class ProductControl {
      * @param request
      * @return
      */
-    @RequestMapping("public")
-    public String  addProduct(@RequestParam("title") String title,
-                           @RequestParam("abstracts") String abstracts,
-                           @RequestParam("pictureURL") String pictureURL,
+    @RequestMapping("/publicProduct")
+    public ModelAndView  addProduct(@RequestParam("title") String title,
+                           @RequestParam("summary") String abstracts,
+                           @RequestParam("image") String pictureURL,
                            @RequestParam("detail") String detail,
-                           @RequestParam("price") int price,
+                           @RequestParam("price") double price,
                            HttpServletRequest request){
         int userId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
-//        int userId = 3;
-        productService.addProduct(title,abstracts,pictureURL,detail,price,userId);
-        return "index";
+        int num = productService.addProduct(title,abstracts,pictureURL,detail,price,userId);
+        int productId = 0;
+        if(num > 0){
+            List<Product> productList = productService.getProductId(title,abstracts,pictureURL,detail,price,userId);
+            for(int i=0;i<productList.size();i++){
+                if(productList.get(i).getProductId() > productId)
+                    productId = productList.get(i).getProductId();
+            }
+        }
+        ModelAndView modelAndView = new ModelAndView("/publicSubmit");
+        modelAndView.addObject("productId", productId);
+        return modelAndView;
     }
 
+    @RequestMapping("upload")
+    public String uploadFile(){
+        return null;
+    }
     /**
      * 更新商品信息
      * @param productId
@@ -65,7 +87,7 @@ public class ProductControl {
      * @param request
      * @return
      */
-    @RequestMapping("product/update")
+    @RequestMapping("/editProduct")
     public String updateProduct(@RequestParam("productId") int productId,
                                 @RequestParam("title") String title,
                                 @RequestParam("abstracts") String abstracts,

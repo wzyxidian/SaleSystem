@@ -48,7 +48,7 @@
                 for (var i = 0, fileCount = uploadInput.files.length; i < fileCount; i++) {
                     console.log(uploadInput.files[i]);
                 }
-                var maxAllowedSize = 1000000;
+                var maxAllowedSize = 1024*1024;
                 var file = uploadInput.files[0];
 
                 if(uploadInput.files[0].size > maxAllowedSize) {
@@ -59,7 +59,7 @@
                     form.enctype = "multipart/form-data";
 
                     var xhr = new XMLHttpRequest();
-                    xhr.open("post", "/api/upload", true);
+                    xhr.open("post", "/upload", true);
                     xhr.onload = function () {
                         if (xhr.status === 200) {
                             alert("文件上传成功");
@@ -78,6 +78,8 @@
                 if(!isSubmiting && this.check()){
                     price.value = Number(price.value);
                     isSubmiting = true;
+                    form.action = "/publicProduct";
+                    form.method = "post";
                     form.submit();
                 }
             }.bind(this),false);

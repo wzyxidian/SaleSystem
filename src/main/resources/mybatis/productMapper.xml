@@ -13,13 +13,15 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     <select id="sellerProductList"  resultType="com.netease.sale.meta.Product">
         select *  from product where owner=#{owner}
     </select>
-
+    <select id="getProductId" resultType="com.netease.sale.meta.Product">
+        select * from product where title=#{title} and abstracts=#{abstracts} and pictureURL=#{pictureURL} and detail=#{detail} and price=#{price} and owner=#{owner} and saleout=0
+    </select>
     <insert id="addProduct" parameterType="com.netease.sale.meta.Product"
             useGeneratedKeys="true">
-        insert into product(title, abstracts, pictureURL, detail, price, owner)
-        values(#{title},#{abstracts},#{pictureURL},#{detail},#{price},#{owner})
+        insert into product(title, abstracts, pictureURL, detail, price, owner,saleout)
+        values(#{title},#{abstracts},#{pictureURL},#{detail},#{price},#{owner},0)
 
-        <selectKey keyProperty="productId" resultType="int" order="AFTER">
+        <selectKey keyProperty="productId" resultType="int" order="AFTER" >
             select last_insert_id() as productId
         </selectKey>
     </insert>

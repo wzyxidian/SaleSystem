@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(String title, String abstracts, String pictrueURL, String detail, int price, int owner) {
-        productDao.addProduct(title, abstracts, pictrueURL, detail, price, owner);
+    public int addProduct(String title, String abstracts, String pictrueURL, String detail, double price, int owner) {
+        return productDao.addProduct(title, abstracts, pictrueURL, detail, price, owner);
     }
 
     /**
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
      * @param price
      */
     @Override
-    public void updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, int price) {
+    public void updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, double price) {
         productDao.updateProduct(productId, title, abstracts, pictrueURL, detail, price);
     }
 
@@ -74,6 +74,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int batchUpdateProducts(List productList) {
         return productDao.batchUpdateProducts(productList);
+    }
+
+    /**
+     * 查询新发布商品的ID
+     *
+     * @param title
+     * @param abstracts
+     * @param pictrueURL
+     * @param detail
+     * @param price
+     * @param owner
+     * @return
+     */
+    @Override
+    public List<Product> getProductId(String title, String abstracts, String pictrueURL, String detail, double price, int owner) {
+        return productDao.getProductId(title,abstracts,pictrueURL,detail,price,owner);
     }
 
 

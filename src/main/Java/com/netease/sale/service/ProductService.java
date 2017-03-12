@@ -32,7 +32,7 @@ public interface ProductService {
      * @param price
      * @param owner
      */
-    public void addProduct(String title, String abstracts, String pictrueURL, String detail, int price, int owner);
+    public int addProduct(String title, String abstracts, String pictrueURL, String detail, double price, int owner);
 
     /**
      * 卖家修改一件商品信息
@@ -42,7 +42,7 @@ public interface ProductService {
      * @param detail
      * @param price
      */
-    public void updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, int price);
+    public void updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, double price);
 
     /**
      * 卖家删除商品
@@ -62,4 +62,16 @@ public interface ProductService {
      * @return
      */
     public int batchUpdateProducts(List productList);
+
+    /**
+     * 查询新发布商品的ID
+     * @param title
+     * @param abstracts
+     * @param pictrueURL
+     * @param detail
+     * @param price
+     * @param owner
+     * @return
+     */
+    public List<Product> getProductId(String title, String abstracts, String pictrueURL, String detail, double price, int owner);
 }

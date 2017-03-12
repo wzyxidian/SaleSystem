@@ -34,7 +34,7 @@ public interface ProductDao {
      * @param price
      * @param owner
      */
-    public void addProduct(@Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") int price, @Param("owner") int owner);
+    public int addProduct(@Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price, @Param("owner") int owner);
 
     /**
      * 卖家修改一件商品的信息
@@ -44,7 +44,7 @@ public interface ProductDao {
      * @param detail
      * @param price
      */
-    public void updateProduct(@Param("productId") int productId, @Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") int price);
+    public void updateProduct(@Param("productId") int productId, @Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price);
 
     /**
      * 卖家删除商品
@@ -65,4 +65,16 @@ public interface ProductDao {
      * @return
      */
     public int batchUpdateProducts(@Param("productList") List productList);
+
+    /**
+     * 查询新发布商品的ID
+     * @param owner
+     * @param title
+     * @param abstracts
+     * @param pictureURL
+     * @param detail
+     * @param price
+     * @return
+     */
+    public List<Product> getProductId(@Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price, @Param("owner") int owner);
 }
