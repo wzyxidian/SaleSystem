@@ -74,11 +74,16 @@
                     xhr.send(form);
                 }
             });
+            var productId = $("submitProduct").value;
             form.addEventListener('submit',function(e){
                 if(!isSubmiting && this.check()){
                     price.value = Number(price.value);
                     isSubmiting = true;
-                    form.action = "/publicProduct";
+                    if(productId != ""){
+                        form.action = "/editProduct?productId=" + productId;
+                    }else{
+                        form.action = "/publicProduct";
+                    }
                     form.method = "post";
                     form.submit();
                 }

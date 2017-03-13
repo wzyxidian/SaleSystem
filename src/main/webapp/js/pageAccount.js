@@ -101,6 +101,7 @@ function cart_buy()
                     if(result == "success"){
                         loading.result('购买成功');
                     }else{
+                        alert("购物车中没有商品可以购买");
                         loading.result('购买失败');
                     }
                     location.href = "/account";

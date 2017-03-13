@@ -125,7 +125,7 @@
                 </div>
                 <div class="num">销售数量：<span class="lessNum"><a>-</a></span><span class="totalNum">${productDetail.saleout}</span><span  class="moreNum"><a>+</a></span></div>
                 <div class="oprt f-cb">
-                    <a href="/edit?${productDetail.productId}" class="u-btn u-btn-primary">编 辑</a>
+                    <a href="/productEditDetail?productId=${productDetail.productId}" class="u-btn u-btn-primary">编 辑</a>
                 </div>
             </div>
         </div>

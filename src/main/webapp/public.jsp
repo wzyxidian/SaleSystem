@@ -33,13 +33,13 @@
             <div class="fmitem">
                 <label class="fmlab">标题：</label>
                 <div class="fmipt">
-                    <input class="u-ipt ipt" name="title" autofocus placeholder="2-80字符"/>
+                    <input class="u-ipt ipt" name="title" autofocus placeholder="2-80字符" value="${productEditDetail.title}"/>
                 </div>
             </div>
             <div class="fmitem">
                 <label class="fmlab">摘要：</label>
                 <div class="fmipt">
-                    <input class="u-ipt ipt" name="summary" placeholder="2-140字符"/>
+                    <input class="u-ipt ipt" name="summary" placeholder="2-140字符" value="${productEditDetail.abstracts}"/>
                 </div>
             </div>
             <div class="fmitem">
@@ -52,7 +52,7 @@
             <div class="fmitem">
                 <label class="fmlab"></label>
                 <div class="fmipt" id="urlUpload">
-                    <input class="u-ipt ipt"  name="image" placeholder="图片地址"/>
+                    <input class="u-ipt ipt"  name="image" placeholder="图片地址" value="${productEditDetail.pictureURL}"/>
                 </div>
                 <div class="fmipt" id="fileUpload"  style="display:none">
                     <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
@@ -62,18 +62,18 @@
             <div class="fmitem">
                 <label class="fmlab">正文：</label>
                 <div class="fmipt">
-                    <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符"></textarea>
+                    <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符">${productEditDetail.detail}</textarea>
                 </div>
             </div>
             <div class="fmitem">
                 <label class="fmlab">价格：</label>
                 <div class="fmipt">
-                    <input class="u-ipt price" name="price"/>元
+                    <input class="u-ipt price" name="price"  value="${productEditDetail.price}"/>元
                 </div>
             </div>
             <div class="fmitem fmitem-nolab fmitem-btn">
                 <div class="fmipt">
-                    <button type="submit" class="u-btn u-btn-primary u-btn-lg">发 布</button>
+                    <button type="submit" class="u-btn u-btn-primary u-btn-lg" id="submitProduct" value="${productEditDetail.productId}">发 布</button>
                 </div>
             </div>
         </form>

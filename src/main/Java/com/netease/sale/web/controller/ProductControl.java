@@ -6,15 +6,23 @@ import com.netease.sale.meta.User;
 import com.netease.sale.service.serviceImpl.BuyServiceImpl;
 import com.netease.sale.service.serviceImpl.ProductServiceImpl;
 import com.netease.sale.service.serviceImpl.UserServiceImpl;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -73,8 +81,34 @@ public class ProductControl {
     }
 
     @RequestMapping("upload")
-    public String uploadFile(){
-        return null;
+    @ResponseBody
+    public String uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpServletResponse response){
+
+        String fileName = file.getOriginalFilename();
+        ServletContext sc = request.getSession().getServletContext();
+        String filePath = sc.getRealPath("/img")+File.separator;
+        File f = new File(filePath);
+        if (!f.exists())
+            f.mkdirs();
+        if (!file.isEmpty()) {
+            try {
+                FileOutputStream fos = new FileOutputStream(filePath + fileName);
+                InputStream in = file.getInputStream();
+                int b = 0;
+                while ((b = in.read()) != -1) {
+                    fos.write(b);
+                }
+                fos.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // 保存文件地址，用于JSP页面回显
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("result",filePath + fileName);
+
+        return jsonObject.toString();
     }
     /**
      * 更新商品信息
@@ -88,15 +122,29 @@ public class ProductControl {
      * @return
      */
     @RequestMapping("/editProduct")
-    public String updateProduct(@RequestParam("productId") int productId,
-                                @RequestParam("title") String title,
-                                @RequestParam("abstracts") String abstracts,
-                                @RequestParam("pictureURL") String pictureURL,
-                                @RequestParam("detail") String detail,
-                                @RequestParam("price") int price,
-                                HttpServletRequest request){
+    public ModelAndView updateProduct(@RequestParam("productId") int productId,
+                                      @RequestParam("title") String title,
+                                      @RequestParam("summary") String abstracts,
+                                      @RequestParam("image") String pictureURL,
+                                      @RequestParam("detail") String detail,
+                                      @RequestParam("price") double price,
+                                      HttpServletRequest request){
         productService.updateProduct(productId,title,abstracts,pictureURL,detail,price);
-        return "index";
+        ModelAndView modelAndView = new ModelAndView("/publicSubmit");
+        modelAndView.addObject("productId", productId);
+        return modelAndView;
+    }
+
+    /**
+     * 卖家编辑商品，显示商品详情
+     * @return
+     */
+    @RequestMapping("/productEditDetail")
+    public ModelAndView productEditDetail(@RequestParam("productId") int productId){
+        Product product = productService.getProduct(productId);
+        ModelAndView modelAndView = new ModelAndView("/public");
+        modelAndView.addObject("productEditDetail", product);
+        return modelAndView;
     }
 
     /**

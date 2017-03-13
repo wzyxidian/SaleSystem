@@ -65,6 +65,8 @@ public class BuyControl {
      public String addBuyList(HttpServletRequest request){
          int buyerId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
          User user = userService.showCart(buyerId);
+        if(user == null)
+            return "fail";
          List<Cart> cartList = user.getCarts();
          List<Buy> buyList = new ArrayList<Buy>();
          List<Product> productSale = new ArrayList<Product>();
