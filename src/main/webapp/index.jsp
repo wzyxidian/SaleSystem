@@ -160,6 +160,5 @@
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 <script type="text/javascript" src="/js/pageIndex.js"></script>
-
 </body>
 </html>
