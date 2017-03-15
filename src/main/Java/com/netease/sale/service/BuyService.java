@@ -2,7 +2,6 @@ package com.netease.sale.service;
 
 import com.netease.sale.meta.Buy;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -10,8 +9,12 @@ import java.util.List;
  */
 public interface BuyService {
 
-    public void addBuy(int buyerId, int goodsId, int number, String buyTime, double oldPrice);
-
+    /**
+     *  同一个用户对同一件商品的购买记录
+     * @param buyerId
+     * @param goodsId
+     * @return
+     */
     public List<Buy> getBuys(int buyerId, int goodsId);
 
     /**

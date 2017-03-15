@@ -12,6 +12,13 @@ import java.io.IOException;
  */
 @Controller
 public class Logout {
+
+    /**
+     * 退出
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/logout")
     public ModelAndView loginCheck(HttpServletRequest request)
             throws IOException {

@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <style>
         .n-table th,.n-table td {text-align: center}
-
     </style>
 </head><body>
 <div class="n-support">请使用Chrome、Safari等webkit内核的浏览器！</div><div class="n-head">
@@ -39,21 +38,21 @@
         <tr><th>内容图片</th><th >标题</th><th>购买时间</th><th>购买数量</th><th>购买价格</th></tr>
         </thead>
         <tbody>
-        <c:forEach items="${buyItems}" var="buyItem">
-            <tr>
-                <td>  <a href="/productDetail?productId=${buyItem.product.productId}&type=0"><img src="${buyItem.product.pictureURL}" alt="${buyItem.product.title}"></a></td>
-                <td><h4><a href="/productDetail?productId=${buyItem.product.productId}&type=0">${buyItem.product.title}</a></h4></td>
-                <td><span class="v-time">${buyItem.buyTime}</span></td>
-                <td><span class="v-num">${buyItem.number}</span></td>
-                <td><span class="v-unit">¥</span><span class="value">${buyItem.oldPrice}</span></td>
-            </tr>
-        </c:forEach>
+            <c:forEach items="${buyItems}" var="buyItem">
+                <tr>
+                    <td>  <a href="/productDetail?productId=${buyItem.product.productId}&type=0"><img src="${buyItem.product.pictureURL}" alt="${buyItem.product.title}"></a></td>
+                    <td><h4><a href="/productDetail?productId=${buyItem.product.productId}&type=0">${buyItem.product.title}</a></h4></td>
+                    <td><span class="v-time">${buyItem.buyTime}</span></td>
+                    <td><span class="v-num">${buyItem.number}</span></td>
+                    <td><span class="v-unit">¥</span><span class="value">${buyItem.oldPrice}</span></td>
+                </tr>
+            </c:forEach>
         </tbody>
         <tfoot>
-        <tr>
-            <td colspan="4"><div class="total">总计：</div></td>
-            <td><span class="v-unit">¥</span><span class="value">${total}</span></td>
-        </tr>
+            <tr>
+                <td colspan="4"><div class="total">总计：</div></td>
+                <td><span class="v-unit">¥</span><span class="value">${total}</span></td>
+            </tr>
         </tfoot>
     </table>
 </div>

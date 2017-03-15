@@ -1,14 +1,26 @@
 package com.netease.sale.service;
 
 import com.netease.sale.meta.Cart;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/18.
  */
 public interface CartService {
+
+    /**
+     * 根据买家Id和商品Id查询该购物记录是否存在
+     * @param keeperId
+     * @param goodsId
+     * @return
+     */
+    public Cart selectCart(int keeperId, int goodsId);
+
+    /**
+     * 更新购物车中同一件商品的件数
+     * @param keepNumber
+     * @param cartId
+     */
+    public int updateCart(int keepNumber, int cartId);
 
     /**
      * 将商品添加到购物车
@@ -17,7 +29,7 @@ public interface CartService {
      * @param keepNumber
      * @return
      */
-    public void addCart(int keeperId, int goodsId, int keepNumber);
+    public int addCart(int keeperId, int goodsId, int keepNumber);
 
     /**
      * 将商品从购物车中删除
@@ -26,17 +38,10 @@ public interface CartService {
     public int deleteCart(int keeperId);
 
     /**
-     * 更新购物车中同一件商品的件数
-     * @param keepNumber
+     * 删除购物车中的一条记录
      * @param cartId
-     */
-    public void updateCart(int keepNumber, int cartId);
-
-    /**
-     * 查看一条购物车记录
-     * @param keeperId
-     * @param goodsId
      * @return
      */
-    public Cart selectCart(int keeperId, int goodsId);
+    public int deleteOneCart(int cartId);
+
 }

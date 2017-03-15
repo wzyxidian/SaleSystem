@@ -37,7 +37,7 @@
         <ul class="f-cb">
             <c:forEach items="${productList}" var="product">
                 <li>
-					<a href="/productDetail?productId=${product.productId}&type=0" class="link">
+					<a href="/productDetail?productId=${product.productId}&type=1" class="link">
                         <div class="img">
                             <img src="${product.pictureURL}" alt="${product.title}">
                         </div>
@@ -134,7 +134,7 @@
 					<c:if test="${!saleProducts.contains(sellerProduct)}">
 						<div class="u-btn u-btn-normal u-btn-xs del " data-del="20" onclick="disp_confirm(${sellerProduct.productId})">删除</div>
 					</c:if>
-					<a href="/productDetail?productId=${sellerProduct.productId}&type=0" class="link">
+					<a href="/productDetail?productId=${sellerProduct.productId}&type=1" class="link">
 						<div class="img">
 							<img src="${sellerProduct.pictureURL}" alt="${sellerProduct.title}">
 						</div>
@@ -157,6 +157,7 @@
 </c:when>
 
 </c:choose>
+
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 <script type="text/javascript" src="/js/pageIndex.js"></script>

@@ -3,19 +3,33 @@
 mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.netease.sale.dao.ProductDao">
+
+    <!-- 得到商品详情 -->
     <select id="getProduct" parameterType="int" resultType="com.netease.sale.meta.Product">
         select *  from product where productId = #{productId}
     </select>
 
+    <!-- 得到所有商品的列表 -->
     <select id="getProductList"  resultType="com.netease.sale.meta.Product">
         select *  from product
     </select>
-    <select id="sellerProductList"  resultType="com.netease.sale.meta.Product">
+
+    <!-- 得到卖家所有的商品列表 -->
+    <select id="sellerProductList"  parameterType="int" resultType="com.netease.sale.meta.Product">
         select *  from product where owner=#{owner}
     </select>
+
+    <!-- 卖家删除未出售商品 -->
+    <delete id="deleteProduct" parameterType="int">
+        delete from product where productId=#{productId}
+    </delete>
+
+    <!-- 根据产品信息来查询产品的ID -->
     <select id="getProductId" resultType="com.netease.sale.meta.Product">
         select * from product where title=#{title} and abstracts=#{abstracts} and pictureURL=#{pictureURL} and detail=#{detail} and price=#{price} and owner=#{owner} and saleout=0
     </select>
+
+    <!-- 卖家发布商品 -->
     <insert id="addProduct" parameterType="com.netease.sale.meta.Product"
             useGeneratedKeys="true">
         insert into product(title, abstracts, pictureURL, detail, price, owner,saleout)
@@ -26,17 +40,14 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
         </selectKey>
     </insert>
 
+    <!-- 更新商品信息 -->
     <update id="updateProduct" parameterType="com.netease.sale.meta.Product">
         update product set title=#{title},abstracts=#{abstracts},pictureURL=#{pictureURL},detail=#{detail},price=#{price}
         where productId=#{productId}
     </update>
 
-    <delete id="deleteProduct" parameterType="int">
-        delete from product where productId=#{productId}
-    </delete>
-
+    <!-- 批量更新商品卖的数量-->
     <update id="batchUpdateProducts" parameterType="java.util.List">
-
         <foreach collection="productList" index="index" item="productItem" open="" separator=";" close="">
             update product
             <set>

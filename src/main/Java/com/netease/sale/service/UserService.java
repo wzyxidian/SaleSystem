@@ -1,9 +1,6 @@
 package com.netease.sale.service;
 
-import com.netease.sale.meta.Product;
 import com.netease.sale.meta.User;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -24,13 +21,6 @@ public interface UserService {
      * @return
      */
     public User buyedProductList(int userId);
-
-    /**
-     * 得到用户未购买的商品列表
-     * @param userId
-     * @return
-     */
-    public User unbuyedProductList(int userId);
 
     /**
      *

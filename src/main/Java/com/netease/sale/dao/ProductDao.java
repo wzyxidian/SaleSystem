@@ -13,6 +13,25 @@ import java.util.List;
 public interface ProductDao {
 
     /**
+     * 得到所有的商品
+     * @return
+     */
+    public List<Product> getProductList();
+
+    /**
+     * 列举出卖家所有的商品
+     * @param owner
+     * @return
+     */
+    public List<Product> sellerProductList(int owner);
+
+    /**
+     * 卖家删除未出售商品
+     * @param productId
+     */
+    public int deleteProduct(int productId);
+
+    /**
      * 得到商品的详情
      * @param productId
      * @return
@@ -20,10 +39,11 @@ public interface ProductDao {
     public Product getProduct(int productId);
 
     /**
-     * 得到所有的商品
+     * 批量更新每件商品已经卖出的件数
+     * @param productList
      * @return
      */
-    public List<Product> getProductList();
+    public int batchUpdateProducts(@Param("productList") List productList);
 
     /**
      * 发布一件商品
@@ -37,36 +57,6 @@ public interface ProductDao {
     public int addProduct(@Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price, @Param("owner") int owner);
 
     /**
-     * 卖家修改一件商品的信息
-     * @param title
-     * @param abstracts
-     * @param pictureURL
-     * @param detail
-     * @param price
-     */
-    public void updateProduct(@Param("productId") int productId, @Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price);
-
-    /**
-     * 卖家删除商品
-     * @param productId
-     */
-    public void deleteProduct(int productId);
-
-    /**
-     * 列举出卖家所有的商品
-     * @param owner
-     * @return
-     */
-    public List<Product> sellerProductList(int owner);
-
-    /**
-     * 批量更新每件商品已经卖出的件数
-     * @param productList
-     * @return
-     */
-    public int batchUpdateProducts(@Param("productList") List productList);
-
-    /**
      * 查询新发布商品的ID
      * @param owner
      * @param title
@@ -77,4 +67,20 @@ public interface ProductDao {
      * @return
      */
     public List<Product> getProductId(@Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price, @Param("owner") int owner);
-}
+
+    /**
+     * 卖家修改一件商品的信息
+     * @param title
+     * @param abstracts
+     * @param pictureURL
+     * @param detail
+     * @param price
+     */
+    public int updateProduct(@Param("productId") int productId, @Param("title") String title, @Param("abstracts") String abstracts, @Param("pictureURL") String pictureURL, @Param("detail") String detail, @Param("price") double price);
+
+
+
+
+
+
+  }

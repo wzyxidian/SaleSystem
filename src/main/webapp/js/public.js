@@ -50,9 +50,14 @@
                 }
                 var maxAllowedSize = 1024*1024;
                 var file = uploadInput.files[0];
-
+                var postfix = file.name.substr(file.name.lastIndexOf("."));
+                var re=/[\u0391-\uFFE5]+/g
                 if(uploadInput.files[0].size > maxAllowedSize) {
                     alert("超过文件上传大小限制");
+                }if(postfix!=".png"&&postfix!=".jpg"){
+                    alert("请上传后缀名为jpg或png的照片");
+                }else if(file.name.match(re) != null){
+                    alert("文件名不能包含中文字符");
                 }else{
                     var form = new FormData();
                     form.append('file', file, file.name);

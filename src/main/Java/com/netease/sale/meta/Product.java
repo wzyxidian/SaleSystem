@@ -2,9 +2,6 @@ package com.netease.sale.meta;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.sql.Time;
-
 /**
  * Created by Administrator on 2017/2/15.
  */

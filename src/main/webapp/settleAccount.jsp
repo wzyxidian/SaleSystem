@@ -32,25 +32,28 @@
     </div>
     <table id="newTable" class="m-table m-table-row n-table g-b3">
         <thead >
-            <tr><th>标题</th><th >数量</th><th>价格</th></tr>
+            <tr><th id="cartId">序号</th><th>标题</th><th >数量</th><th>价格</th><th>操作</th></tr>
         </thead>
-        <tbody>
-        <c:forEach items="${cartItems}" var="cartItem">
-            <tr>
-                <td> ${cartItem.product.title}</td>
-                <td><span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">${cartItem.keepNumber}</span><span id="addNum" class="moreNum"><a>+</a></span></td>
-                <td>${cartItem.product.price}</td>
-            </tr>
-        </c:forEach>
+        <tbody id="tbodys">
+            <c:forEach items="${cartItems}" var="cartItem" >
+                <tr >
+                    <td>${cartItem.product.productId}</td>
+                    <td> ${cartItem.product.title}</td>
+                    <td><span  class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">${cartItem.keepNumber}</span><span id="addNum" class="moreNum"><a>+</a></span></td>
+                    <td>${cartItem.product.price}</td>
+                    <td><button class="u-btn u-btn-primary" onclick=deleteCart(${cartItem.cartId})>删除</button></td>
+                </tr>
+            </c:forEach>
         </tbody>
 
     </table>
     <div id="act-btn"><button class="u-btn u-btn-primary" id="back" >退出</button>
-        <button class="u-btn u-btn-primary" id="Account" onclick="cart_buy()">购买</button></div>
+        <button class="u-btn u-btn-primary" id="Account" onclick="cart_buy()">购买</button>
+    </div>
 </div>
 
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
-<script type="text/javascript" src="js/pageAccount.js"></script>
+<script type="text/javascript" src="/js/pageAccount.js"></script>
 </body>
 </html>

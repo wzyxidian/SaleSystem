@@ -22,6 +22,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> sellerProductList(int owner) {
+        return productDao.sellerProductList(owner);
+    }
+
+    @Override
+    public int deleteProduct(int productId) {
+        return productDao.deleteProduct(productId);
+    }
+
+    @Override
     public Product getProduct(int productId) {
         return this.productDao.getProduct(productId);
     }
@@ -31,66 +41,29 @@ public class ProductServiceImpl implements ProductService {
         return productDao.addProduct(title, abstracts, pictrueURL, detail, price, owner);
     }
 
-    /**
-     * 卖家修改一件商品信息
-     *
-     * @param title
-     * @param abstracts
-     * @param pictrueURL
-     * @param detail
-     * @param price
-     */
-    @Override
-    public void updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, double price) {
-        productDao.updateProduct(productId, title, abstracts, pictrueURL, detail, price);
-    }
-
-    /**
-     * 卖家删除商品
-     *
-     * @param productId
-     */
-    @Override
-    public void deleteProduct(int productId) {
-        productDao.deleteProduct(productId);
-    }
-
-    /**
-     * 列举出卖家所有的商品
-     *
-     * @param owner
-     */
-    @Override
-    public List<Product> sellerProductList(int owner) {
-        return productDao.sellerProductList(owner);
-    }
-
-    /**
-     * 批量更新每件商品已经卖出的件数
-     *
-     * @param productList
-     * @return
-     */
     @Override
     public int batchUpdateProducts(List productList) {
         return productDao.batchUpdateProducts(productList);
     }
 
-    /**
-     * 查询新发布商品的ID
-     *
-     * @param title
-     * @param abstracts
-     * @param pictrueURL
-     * @param detail
-     * @param price
-     * @param owner
-     * @return
-     */
     @Override
     public List<Product> getProductId(String title, String abstracts, String pictrueURL, String detail, double price, int owner) {
         return productDao.getProductId(title,abstracts,pictrueURL,detail,price,owner);
     }
+
+    @Override
+    public int updateProduct(int productId, String title, String abstracts, String pictrueURL, String detail, double price) {
+        return productDao.updateProduct(productId, title, abstracts, pictrueURL, detail, price);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

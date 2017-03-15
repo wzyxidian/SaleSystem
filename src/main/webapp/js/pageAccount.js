@@ -1,93 +1,66 @@
-/**
- * Created by Administrator on 2017/3/11.
- */
-/*(function(w,d,u){
-    var settleAccount = util.get('settleAccount');
-    if(!settleAccount){
-        return;
+document.getElementById("cartId").style.display="none";
+
+with(document.getElementById("tbodys")){
+    for(var i=0;i<rows.length;i++){
+        rows[i].cells[0].style.display = "none";
     }
-    var name = 'products';
-    var products = util.getCookie(name);
-    var $ = function(id){
-        return document.getElementById(id);
+}
+
+$(".lessNum").click(function(){
+    var num = $(this).parent().find(".totalNum").text();
+    if(num > 0){
+        num = Number(num) - 1;
+        $(this).parent().find(".totalNum").text(num);
+    }else{
+        alert("您没有购买任何商品");
     }
+});
 
-
-    window.onload = function(){
-        $('newTable').onclick = function(e){
-            var e = arguments[0] || window.event;
-            target = e.srcElement ? e.srcElement : e.target;
-            if(target.nodeName == "SPAN" && target.className == "moreNum"){
-                var num = target.parentElement.children[1].textContent;
-                var id = target.parentElement.children[2].textContent;
-                num ++;
-                target.parentElement.children[1].textContent = num;
-                util.modifyOne(products,id,num);
-            }else if(target.nodeName == "SPAN" && target.className == "lessNum"){
-                var num = target.parentElement.children[1].textContent;
-                var id = target.parentElement.children[2].textContent;
-                num --;
-                if(num < 0){
-                    alert("该商品数量为0");
-                }else{
-                    target.parentElement.children[1].textContent = num;
-                    util.modifyOne(products,id,num);
-                }
-            }
-            return false;
-        };
-    };
-
-    var loading = new Loading();
-    var layer = new Layer();
-    $('Account').onclick = function(e){
-        var newProducts = products.map(function(arr){
-            return {'id':arr.id,'number':arr.num};
-        });
-        console.log(newProducts);
-        var ele = e.target;
-        layer.reset({
-            content:'确认购买吗？',
-            onconfirm:function(){
-                layer.hide();
-                loading.show();
-
-                var xhr = new XMLHttpRequest();
-                var data = JSON.stringify(newProducts);
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState == 4){
-                        var status = xhr.status;
-                        if(status >= 200 && status < 300 || status == 304){
-                            var json = JSON.parse(xhr.responseText);
-                            if(json && json.code == 200){
-                                loading.result('购买成功',function(){location.href = './account.html';});
-                                util.deleteCookie(name);
-                            }else{
-                                alert(json.message);
-                            }
-                        }else{
-                            loading.result(message||'购买失败');
-                        }
-                    }
-                };
-                xhr.open('post','/api/buy');
-                xhr.setRequestHeader('Content-Type','application/json');
-                xhr.send(data);
-            }.bind(this)
-        }).show();
-        return;
-    };
-    /!*document.getElementById('back').onclick = function(){
-        location.href = window.history.back();
-    }*!/
-})(window,document);*/
+$(".moreNum").click(function(){
+    var num = $(this).parent().find(".totalNum").text();
+    num = Number(num) +1;
+    $(this).parent().find(".totalNum").text(num);
+});
 
 document.getElementById('back').onclick = function(){
     location.href = window.history.back();
 }
 
+function deleteCart(cartId) {
+    var layer = new Layer();
+    var loading = new Loading();
+    layer.reset({
+        content:'确认删除购物记录吗？',
+        onconfirm:function(){
+            layer.hide();
+            loading.show();
+            $.ajax({
+                url:'/deleteOneCart?cartId='+cartId,
+                success:function(result){
+                    if(result == "success"){
+                        loading.result('删除成功');
+                    }else{
+                        loading.result('删除失败');
+                    }
+                    location.href = "/settleAccount";
+                }
+            });
+        }.bind(this)
+    }).show();
+}
+
+var rows = document.getElementById("newTable").rows.length;
+var cartString = "";
+for(var i=1; i<rows;i++){
+    var productId = $("#newTable tr:eq("+i+") td:eq(0)").html();
+    var keepNumber = $("#newTable tr:eq("+i+") td:eq(2)").find(".totalNum").text();
+    var price = $("#newTable tr:eq("+i+") td:eq(3)").html();
+    var cartString = cartString + productId + "," + keepNumber + "," + price +";";
+
+}
 function cart_buy()
 {
+
     var layer = new Layer();
     var loading = new Loading();
     layer.reset({
@@ -96,7 +69,9 @@ function cart_buy()
             layer.hide();
             loading.show();
             $.ajax({
-                url:'/addBuyList',
+                type : 'POST',
+                url : '/addBuyList',
+                data : {cartArr:cartString},
                 success:function(result){
                     if(result == "success"){
                         loading.result('购买成功');

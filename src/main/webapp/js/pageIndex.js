@@ -10,7 +10,6 @@ $("#tab2").click(function() {
     $("#tab2").addClass("z-sel");
 });
 
-
 function disp_confirm(id)
 {
     var layer = new Layer();

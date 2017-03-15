@@ -22,10 +22,11 @@
             <li><a href="/public">发布</a></li>
         </ul>
     </div>
-</div><div class="g-doc">
+</div>
+<div class="g-doc">
     <div class="n-result">
         <h3>发布成功！</h3>
-        <p><a href="/productDetail?productId=${productId}&type=0">[查看内容]</a><a href="/">[返回首页]</a></p>
+        <p><a href="/productDetail?productId=${productId}&type=1">[查看内容]</a><a href="/">[返回首页]</a></p>
     </div>
 </div>
 </body>

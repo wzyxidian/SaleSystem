@@ -4,7 +4,6 @@ import com.netease.sale.meta.Cart;
 import com.netease.sale.meta.User;
 import com.netease.sale.service.serviceImpl.CartServiceImpl;
 import com.netease.sale.service.serviceImpl.UserServiceImpl;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +24,10 @@ public class CartControl {
     private CartServiceImpl cartService;
     @Resource
     private UserServiceImpl userService;
+
     /**
-     * 添加购物车
+     * 添加购物车,如果购物车中已经存在该产品，则更新购物车记录
+     *            如果购物车中没有该商品的购物车记录，则插入购物车记录
      * @param goodsId
      * @param keepNumber
      * @param request
@@ -37,17 +38,18 @@ public class CartControl {
     public String addCart(@RequestParam("goodsId") int goodsId, @RequestParam("keepNumber") int keepNumber, HttpServletRequest request){
         int keeperId = Integer.valueOf(request.getSession().getAttribute("userId").toString());
         Cart cart = cartService.selectCart(keeperId,goodsId);
-        try{
-            if(cart != null){
-                cartService.updateCart(keepNumber+cart.getKeepNumber(),cart.getCartId());
-            }else {
-                cartService.addCart(keeperId, goodsId, keepNumber);
-            }
-        }catch (Exception e){
-            e.getMessage();
-            return "fail";
+        int num = 0;
+
+        if(cart != null){
+            num = cartService.updateCart(keepNumber + cart.getKeepNumber(),cart.getCartId());
+        }else {
+            num = cartService.addCart(keeperId, goodsId, keepNumber);
         }
-        return "success";
+       if(num > 0){
+           return "success";
+       }else{
+           return "fail";
+       }
     }
 
     /**
@@ -63,8 +65,25 @@ public class CartControl {
         ModelAndView modelAndView = new ModelAndView("settleAccount");
         if(user != null){
             cartItems  = user.getCarts();
+            modelAndView.addObject("cartItems", cartItems);
         }
-        modelAndView.addObject("cartItems", cartItems);
         return  modelAndView;
     }
+
+    /**
+     * 删除购物车中的一条记录
+     * @param cartId
+     * @return
+     */
+    @RequestMapping("/deleteOneCart")
+    @ResponseBody
+    public String deleteOneCart(@RequestParam("cartId") int cartId){
+        int num = cartService.deleteOneCart(cartId);
+        if(num > 0){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
+
 }

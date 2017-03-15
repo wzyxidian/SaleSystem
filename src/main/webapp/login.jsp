@@ -14,7 +14,6 @@
             alert("用户名或密码错误");
             location.href = "login";
         }
-
         //添加用户
         function loginCheck() {
             var form = $("#loginForm")[0];

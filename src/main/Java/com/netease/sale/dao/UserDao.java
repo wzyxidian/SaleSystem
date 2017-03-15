@@ -4,8 +4,6 @@ import com.netease.sale.meta.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2017/2/15.
  */
@@ -26,13 +24,6 @@ public interface UserDao {
      * @return
      */
     public User buyedProducts(int userId);
-
-    /**
-     * 得到用户未购买商品信息
-     * @param userId
-     * @return
-     */
-    public User unbuyedProducts(int userId);
 
     /**
      * 显示用户购物车中的商品

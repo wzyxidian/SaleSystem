@@ -22,6 +22,19 @@ public class Login {
     @Resource
     UserServiceImpl userService;
 
+    /**
+     * 验证用户名与密码，将userName，password，flag存放到session中
+     * flag用来区分买家和卖家
+     *           0：表示买家
+     *           1：表示卖家
+     * @param userName
+     * @param password
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/loginCheck")
     public ModelAndView loginCheck(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response, Model model)
             throws IOException {
@@ -38,6 +51,11 @@ public class Login {
         }
     }
 
+    /**
+     * 跳转到用户页面
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/login")
     public  ModelAndView login() throws IOException {
         ModelAndView mv = new ModelAndView();

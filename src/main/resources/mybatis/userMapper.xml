@@ -4,10 +4,12 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.netease.sale.dao.UserDao">
 
+    <!--  判断该用户是否存在 -->
     <select id="checkUser"  resultType="com.netease.sale.meta.User">
         select * from user where userName=#{userName} and userPassword=#{userPassword}
     </select>
 
+    <!-- 得到买家购买的商品记录数 买家有多条记录数，每条记录对应意一件商品-->
     <select id="buyedProducts" parameterType="int" resultMap="products">
         select buyId, buyerId, goodsId, userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner, number, buyTime, oldPrice, saleout
         from user u
@@ -41,40 +43,7 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
         </collection>
      </resultMap>
 
-    <select id="unbuyedProducts" parameterType="int" resultMap="unProducts">
-        select userId, userName, flag, productId, title, abstracts, pictureURL, detail, price, owner
-        from product p
-        left JOIN (
-        select * from
-        buy b
-        left JOIN
-        user u on u.userId = b.buyerId
-        where u.userId=#{userId}) as c on p.productId = c.goodsId where
-        c.goodsId is null;
-    </select>
-    <resultMap id="unProducts" type="com.netease.sale.meta.User">
-        <collection property="buys"
-                    ofType="com.netease.sale.meta.Buy">
-            <id property="buyId" column="buyId" />
-            <result property="buyerId" column="buyerId" />
-            <result property="goodsId" column="goodsId" />
-            <result property="number" column="number" />
-            <result property="buyTime" column="buyTime" />
-
-            <association property="product"
-                         javaType="com.netease.sale.meta.Product" >
-                <id property="productId" column="productId" />
-                <result property="title" column="title" />
-                <result property="abstracts" column="abstracts" />
-                <result property="pictureURL" column="pictureURL" />
-                <result property="detail" column="detail" />
-                <result property="price" column="price" />
-                <result property="saleout" column="saleout" />
-                <result property="owner" column="owner" />
-            </association>
-        </collection>
-    </resultMap>
-
+    <!-- 买家购物车中所有的购物记录 -->
     <select id="showCart" parameterType="int" resultMap="cart">
         select cartId, userId, userName, goodsId, keepNumber, productId, title, abstracts, pictureURL, detail, price, owner, saleout
         from user u
@@ -87,22 +56,22 @@ mybatis.org/dtd/mybatis-3-mapper.dtd">
     <resultMap id="cart" type="com.netease.sale.meta.User">
         <collection property="carts"
                     ofType="com.netease.sale.meta.Cart">
-        <id property="cartId" column="cartId" />
-        <result property="keeperId" column="keeperId" />
-        <result property="goodsId" column="goodsId" />
-        <result property="keepNumber" column="keepNumber" />
+            <id property="cartId" column="cartId" />
+            <result property="keeperId" column="keeperId" />
+            <result property="goodsId" column="goodsId" />
+            <result property="keepNumber" column="keepNumber" />
 
-        <association property="product"
-                     javaType="com.netease.sale.meta.Product" >
-            <id property="productId" column="productId" />
-            <result property="title" column="title" />
-            <result property="abstracts" column="abstracts" />
-            <result property="pictureURL" column="pictureURL" />
-            <result property="detail" column="detail" />
-            <result property="price" column="price" />
-            <result property="saleout" column="saleout" />
-            <result property="owner" column="owner" />
-        </association>
+            <association property="product"
+                         javaType="com.netease.sale.meta.Product" >
+                <id property="productId" column="productId" />
+                <result property="title" column="title" />
+                <result property="abstracts" column="abstracts" />
+                <result property="pictureURL" column="pictureURL" />
+                <result property="detail" column="detail" />
+                <result property="price" column="price" />
+                <result property="saleout" column="saleout" />
+                <result property="owner" column="owner" />
+            </association>
         </collection>
     </resultMap>
 </mapper>
